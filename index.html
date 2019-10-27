@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Three.js - City -  GLTF</title>
+   
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div id="loading" style="display: block;">
+      <div>
+        <div>...loading...</div>
+        <div class="progress" ><div id="progressbar"></div></div>
+      </div>
+    </div>
+  </body>
+<script type="module">
+import * as THREE from './threejs/three.module.js';
+import {OrbitControls} from './threejs/OrbitControls.js';
+import {GLTFLoader} from './threejs/GLTFLoader.js';
+import {SkeletonUtils} from './threejs/SkeletonUtils.js';
+
+
+var keyboard = {};
+
+var walker = {
+	height: 1.8,
+	speed: 0.5,
+	turn: Math.PI * 0.01
+};
+
+function main() {
+  const canvas = document.querySelector('#c');
+  const renderer = new THREE.WebGLRenderer({canvas});
+
+  const fov = 45;
+  const aspect = 2;  // the canvas default
+  const near = 0.08;
+  const far = 100000;
+  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.set(30, walker.height+1, 80);
+
+  const controls = new OrbitControls(camera, canvas);
+  controls.target.set(30, walker.height, 0);
+  controls.update();
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color('grey');
+
+  function addLight(...pos) {
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(...pos);
+    scene.add(light);
+    scene.add(light.target);
+  }
+  addLight(5, 5, 2);
+  addLight(5, -5, 2);
+  addLight(-5, 5, 5);
+  addLight(0,0,0);
+
+  const manager = new THREE.LoadingManager();
+  manager.onLoad = init;
+
+  const progressbarElem = document.querySelector('#progressbar');
+  manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+    progressbarElem.style.width = `${itemsLoaded / itemsTotal * 100 | 0}%`;
+  };
+
+  const models = {
+    city:    { url: 'images/city/scene.gltf' },
+    building:    { url: 'images/building_25/scene.gltf' },
+  };
+  {
+    const gltfLoader = new GLTFLoader(manager);
+    var scen1 = gltfLoader.load(models["city"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(93,3.8,30);
+    root.scale.set(0.1, 0.1, 0.1);
+    scene.add(root);
+  });
+  var scen2 = gltfLoader.load(models["city"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(-95.5,3.8,30);
+    root.scale.set(0.1, 0.1, 0.1);
+    scene.add(root);
+
+  }); 
+  var scen3 = gltfLoader.load(models["city"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(93,3.8,-160);
+    root.scale.set(0.1, 0.1, 0.1);
+    scene.add(root);
+  });
+  var scen4 = gltfLoader.load(models["city"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(-95.5,3.8,-160);
+    root.scale.set(0.1, 0.1, 0.1);
+    scene.add(root);
+
+  });
+
+   
+   /*  for (const model of Object.values(models)) {
+      gltfLoader.load(model.url, (gltf) => {
+        model.gltf = gltf;
+      });
+    }  */
+  }
+
+
+  function init() {
+    // hide the loading bar
+    const loadingElem = document.querySelector('#loading');
+    loadingElem.style.display = 'none';
+
+    //prepModelsAndAnimations();
+/* 
+    Object.values(models).forEach((model, ndx) => {
+      const clonedScene = SkeletonUtils.clone(model.gltf.scene);
+      const root = new THREE.Object3D();
+      root.add(clonedScene);
+      scene.add(root);
+      root.position.x = (ndx - 3) * 3;
+
+      const mixer = new THREE.AnimationMixer(clonedScene);
+      const firstClip = Object.values(model.animations)[0];
+      const action = mixer.clipAction(firstClip);
+      action.play();
+      mixers.push(mixer);
+    }); */
+  }
+
+  function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
+
+  let then = 0;
+  function render(now) {
+    now *= 0.001;  // convert to seconds
+    const deltaTime = now - then;
+    then = now;
+
+    if (resizeRendererToDisplaySize(renderer)) {
+      const canvas = renderer.domElement;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    }
+
+    /* for (const mixer of mixers) {
+      mixer.update(deltaTime);
+    } */
+
+    //walking events
+   if (keyboard[87]) { // W key go forward
+		camera.position.x += Math.sin(camera.rotation.y) * walker.speed;
+		camera.position.z += -Math.cos(camera.rotation.y) * walker.speed;
+    console.log("W clicked");
+	}
+	if (keyboard[83]) { // S key go back
+		camera.position.x -= Math.sin(camera.rotation.y) * walker.speed;
+		camera.position.z -= -Math.cos(camera.rotation.y) * walker.speed;
+    console.log("S clicked");
+	}
+	if (keyboard[68]) { // A key go left
+		camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * walker.speed;
+		camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * walker.speed;
+    console.log("D clicked");
+	}
+	if (keyboard[65]) { // D key  go right
+		camera.position.x += Math.sin(camera.rotation.y - Math.PI / 2) * walker.speed;
+		camera.position.z += -Math.cos(camera.rotation.y - Math.PI / 2) * walker.speed;
+    console.log("A clicked");
+	}
+
+    //Turning the Cam events   
+	if(keyboard[76]){ // L key
+        camera.rotation.y += walker.turn;
+        camera.position.x -= Math.sin(camera.rotation.y + Math.PI / 2) * walker.speed;
+		camera.position.z -= -Math.cos(camera.rotation.y + Math.PI / 2) * walker.speed;
+    console.log("L clicked");
+	}
+  if(keyboard[82]){ // R key
+      camera.rotation.y -= walker.turn;
+      camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * walker.speed;
+		camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * walker.speed;
+    console.log("R clicked");
+	} 
+  /*  if(keyboard[38]){ // top arrow key
+		camera.position.y += walker.turn * 2;
+    console.log("Tilt Up clicked");
+	}
+	if(keyboard[40]){ // bottom arrow key
+		camera.position.y -= walker.turn * 2;
+    console.log("Tilt Down clicked");
+	} 
+ */
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
+}
+
+
+function keyDown(e){
+    keyboard[e.keyCode] = true;
+}
+function keyUp(e){
+    keyboard[e.keyCode] = false;
+}
+
+
+//window.addEventListener('click', clicked );
+window.addEventListener('keydown', keyDown);
+window.addEventListener('keyup', keyUp);
+
+main();
+</script>
+</html>
+
