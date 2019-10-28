@@ -32,16 +32,20 @@ var walker = {
 	speed: 0.5,
 	turn: Math.PI * 0.01
 };
+var camDef = {
+  fov : 45,
+  aspect: 2,
+  near: 0.08,
+  far: 100000
+};
+
+var scene, camera;
 
 function main() {
   const canvas = document.querySelector('#c');
   const renderer = new THREE.WebGLRenderer({canvas});
 
-  const fov = 45;
-  const aspect = 2;  // the canvas default
-  const near = 0.08;
-  const far = 100000;
-  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
   camera.position.set(30, walker.height+1, 80);
 
   const controls = new OrbitControls(camera, canvas);
@@ -50,7 +54,7 @@ function main() {
 
  
 
-  const scene = new THREE.Scene();
+  scene = new THREE.Scene();
   scene.background = new THREE.Color('grey');
 
   function addLight(...pos) {
@@ -148,6 +152,8 @@ var signs= [];
        signs.push(hm);
        console.log(signs.length + " item in the Signs array");
        scene.add(hm);
+
+
 
 
      /* 
@@ -273,9 +279,33 @@ function keyDown(e){
 function keyUp(e){
     keyboard[e.keyCode] = false;
 }
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
+
+//Mus-klick event, ej klar då den inte separerar på objekten
+function clicked(event){
+    event.preventDefault();
+
+    mouse.x = event.clientX / window.innerWidth * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+    raycaster.setFromCamera(mouse, camera);
+    var intersects = raycaster.intersectObjects(scene.children, true);
+    if (intersects.length > 0 ){
+      if(!intersects[0].object.userData.URL == 0)
+      window.open(intersects[0].object.userData.URL);
+    }
+    
+    /* for(var i=0; i < intersects.length; i++){
+        //alert("Klicked", null);
+        //window.open("http://ikea.se");
+        console.log("Mouse Clicked");
+    } */
+}
 
 
-//window.addEventListener('click', clicked );
+
+window.addEventListener('click', clicked );
 window.addEventListener('keydown', keyDown);
 window.addEventListener('keyup', keyUp);
 
