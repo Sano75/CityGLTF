@@ -115,7 +115,7 @@ function main() {
     }  */
   }
 
-
+var signs= [];
   function init() {
     // hide the loading bar
     const loadingElem = document.querySelector('#loading');
@@ -130,6 +130,8 @@ function main() {
        var geometry = new THREE.PlaneGeometry(20, 10);
        var mesh = new THREE.Mesh(geometry, material);
        mesh.position.set(10,27,-135)
+       signs.push(mesh);
+       console.log(signs.length);
        scene.add(mesh);
 
      /* 
