@@ -128,11 +128,27 @@ var signs= [];
        });
        
        var geometry = new THREE.PlaneGeometry(20, 10);
-       var mesh = new THREE.Mesh(geometry, material);
-       mesh.position.set(10,27,-135)
-       signs.push(mesh);
+       var ikea = new THREE.Mesh(geometry, material);
+       ikea.position.set(10,27,-135)
+       ikea.userData = {URL: "http://www.ikea.se"};
+       signs.push(ikea);
        console.log(signs.length + " item in the Signs array");
-       scene.add(mesh);
+       scene.add(ikea);
+
+        //H&M sign
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/hm.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(20, 10);
+       var hm = new THREE.Mesh(geometry, material);
+       hm.position.set(10,15,-135)
+       hm.userData = {URL: "http://www.hm.se"};
+       signs.push(hm);
+       console.log(signs.length + " item in the Signs array");
+       scene.add(hm);
+
 
      /* 
   var textureLoader = new THREE.TextureLoader(manager);
