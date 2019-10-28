@@ -110,22 +110,16 @@ function main() {
     scene.add(root);
 
   });
-
-   
-   /*  for (const model of Object.values(models)) {
-      gltfLoader.load(model.url, (gltf) => {
-        model.gltf = gltf;
-      });
-    }  */
-  }
+}
 
 var signs= [];
+
   function init() {
     // hide the loading bar
     const loadingElem = document.querySelector('#loading');
     loadingElem.style.display = 'none';
-
-     //Ikea sign
+    {
+    //Ikea sign
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
        map: loader.load('images/ikea.jpeg')
@@ -136,7 +130,7 @@ var signs= [];
        ikea.position.set(10,27,-135)
        ikea.userData = {URL: "http://www.ikea.se"};
        signs.push(ikea);
-       console.log(signs.length + " item in the Signs array");
+       //console.log(signs.length + " item in the Signs array");
        scene.add(ikea);
 
         //H&M sign
@@ -150,49 +144,11 @@ var signs= [];
        hm.position.set(10,15,-135)
        hm.userData = {URL: "http://www.hm.se"};
        signs.push(hm);
-       console.log(signs.length + " item in the Signs array");
+       //console.log(signs.length + " item in the Signs array");
        scene.add(hm);
-
-
-
-
-     /* 
-  var textureLoader = new THREE.TextureLoader(manager);
-    crateTexture = textureLoader.load("images/ikea.jpeg");
-    crateBumpMap = textureLoader.load("images/ikea.jpeg");
-    crateNormalMap = textureLoader.load("images/ikea.jpeg")
-
-    crate = new THREE.Mesh(
-        new THREE.CylinderGeometry( 0.5, 0.5, 1.5, 35 ),
-        new THREE.MeshPhongMaterial( {
-            color: 0xffffff,
-            map:crateTexture,
-            bumpMap: crateBumpMap,
-            normalMap:crateNormalMap
-        })
-    );
-    
-    crate.position.set(-11,50,10);
-    crate.receiveShadow = true;
-    scene.add(crate); */
-
-    //prepModelsAndAnimations();
-/* 
-    Object.values(models).forEach((model, ndx) => {
-      const clonedScene = SkeletonUtils.clone(model.gltf.scene);
-      const root = new THREE.Object3D();
-      root.add(clonedScene);
-      scene.add(root);
-      root.position.x = (ndx - 3) * 3;
-
-      const mixer = new THREE.AnimationMixer(clonedScene);
-      const firstClip = Object.values(model.animations)[0];
-      const action = mixer.clipAction(firstClip);
-      action.play();
-      mixers.push(mixer);
-    }); */
   }
-
+  console.log(signs.length + " item in the Signs array");
+  }
   function resizeRendererToDisplaySize(renderer) {
     const canvas = renderer.domElement;
     const width = canvas.clientWidth;
@@ -215,10 +171,6 @@ var signs= [];
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
-
-    /* for (const mixer of mixers) {
-      mixer.update(deltaTime);
-    } */
 
     //walking events
    if (keyboard[87]) { // W key go forward
@@ -295,12 +247,6 @@ function clicked(event){
       if(!intersects[0].object.userData.URL == 0)
       window.open(intersects[0].object.userData.URL);
     }
-    
-    /* for(var i=0; i < intersects.length; i++){
-        //alert("Klicked", null);
-        //window.open("http://ikea.se");
-        console.log("Mouse Clicked");
-    } */
 }
 
 
