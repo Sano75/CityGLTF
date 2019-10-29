@@ -4,11 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="stylesheet" href="/css/index.css">
+    <script src="/OrbitControls.js"></script>
+    <script src="/three.min.js"></script>
     <title>Three.js - City -  GLTF</title>
    
   </head>
   <body>
+    <!--
     <canvas id="c"></canvas>
+    -->
     <div id="loading" style="display: block;">
       <div>
         <div>...loading...</div>
@@ -35,27 +39,61 @@ var walker = {
 var camDef = {
   fov : 45,
   aspect: 2,
-  near: 0.08,
-  far: 100000
+  near: 0.1,
+  far: 10000
 };
 
-var scene, camera;
+var scene, camera, renderer;
+
+window.addEventListener('resize', function () {
+	var width = window.innerWidth;
+	var height = window.innerHeight;
+    renderer.setSize(width, height);
+});
+
+
 
 function main() {
   const canvas = document.querySelector('#c');
-  const renderer = new THREE.WebGLRenderer({canvas});
+  renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
   camera.position.set(30, walker.height+1, 80);
 
-  const controls = new OrbitControls(camera, canvas);
+  const controls = new OrbitControls(camera);
+  //controls.addEventListener('change', renderer);
   controls.target.set(30, walker.height, 0);
-  controls.update();
-
+  controls.minDistance = -10;
+  controls.maxDistance = 700;
+  //controls.update();
  
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color('grey');
+  //scene.background = new THREE.Color('grey');
+
+  let materialArray = [];
+  let texture_ft = new THREE.TextureLoader().load('/images/divine_ft.jpg');
+  let texture_bk = new THREE.TextureLoader().load('/images/divine_bk.jpg');
+  let texture_up = new THREE.TextureLoader().load('/images/divine_up.jpg');
+  let texture_dn = new THREE.TextureLoader().load('/images/divine_dn.jpg');
+  let texture_rt = new THREE.TextureLoader().load('/images/divine_rt.jpg');
+  let texture_lf = new THREE.TextureLoader().load('/images/divine_lf.jpg');
+  
+  materialArray.push(new THREE.MeshBasicMaterial({map: texture_ft}));
+  materialArray.push(new THREE.MeshBasicMaterial({map: texture_bk}));
+  materialArray.push(new THREE.MeshBasicMaterial({map: texture_up}));
+  materialArray.push(new THREE.MeshBasicMaterial({map: texture_dn}));
+  materialArray.push(new THREE.MeshBasicMaterial({map: texture_rt}));
+  materialArray.push(new THREE.MeshBasicMaterial({map: texture_lf}));
+   
+            for (let i = 0; i < 6; i++)
+           materialArray[i].side = THREE.BackSide;
+        let skyboxGeo = new THREE.BoxGeometry( 10000, 10000, 10000);
+        let skybox = new THREE.Mesh( skyboxGeo, materialArray );
+        scene.add( skybox );  
+        animate();
 
   function addLight(...pos) {
     const color = 0xFFFFFF;
@@ -118,8 +156,10 @@ var signs= [];
     // hide the loading bar
     const loadingElem = document.querySelector('#loading');
     loadingElem.style.display = 'none';
+
+    //Signs
     {
-    //Ikea sign
+    //Ikea
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
        map: loader.load('images/ikea.jpeg')
@@ -130,10 +170,9 @@ var signs= [];
        ikea.position.set(10,27,-135)
        ikea.userData = {URL: "http://www.ikea.se"};
        signs.push(ikea);
-       //console.log(signs.length + " item in the Signs array");
        scene.add(ikea);
 
-        //H&M sign
+        //H&M
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
        map: loader.load('images/hm.jpg')
@@ -142,9 +181,8 @@ var signs= [];
        var geometry = new THREE.PlaneGeometry(20, 10);
        var hm = new THREE.Mesh(geometry, material);
        hm.position.set(10,15,-135)
-       hm.userData = {URL: "http://www.hm.se"};
+       hm.userData = {URL: "https://www2.hm.com/sv_se/rea.html"};
        signs.push(hm);
-       //console.log(signs.length + " item in the Signs array");
        scene.add(hm);
   }
   console.log(signs.length + " item in the Signs array");
@@ -217,7 +255,6 @@ var signs= [];
 	} 
  */
     renderer.render(scene, camera);
-
     requestAnimationFrame(render);
   }
 
@@ -248,8 +285,10 @@ function clicked(event){
       window.open(intersects[0].object.userData.URL);
     }
 }
-
-
+function animate() {
+  renderer.render(scene,camera);
+  requestAnimationFrame(animate);
+}
 
 window.addEventListener('click', clicked );
 window.addEventListener('keydown', keyDown);
