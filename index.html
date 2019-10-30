@@ -10,9 +10,6 @@
    
   </head>
   <body>
-    <!--
-    <canvas id="c"></canvas>
-    -->
     <div id="loading" style="display: block;">
       <div>
         <div>...loading...</div>
@@ -60,13 +57,14 @@ function main() {
   document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
-  camera.position.set(30, walker.height+1, 80);
+  //camera.position.set(30, walker.height+1, 80);
+  camera.position.set(250,500,400);
 
   const controls = new OrbitControls(camera);
   //controls.addEventListener('change', renderer);
   controls.target.set(30, walker.height, 0);
   controls.minDistance = -10;
-  controls.maxDistance = 700;
+  controls.maxDistance = 600;
   //controls.update();
  
 
@@ -165,12 +163,12 @@ var signs= [];
        map: loader.load('images/ikea.jpeg')
        });
        
-       var geometry = new THREE.PlaneGeometry(18, 10);
-       var ikea = new THREE.Mesh(geometry, material);
-       ikea.position.set(8.8,28,-143.5)
-       ikea.userData = {URL: "http://www.ikea.se"};
-       signs.push(ikea);
-       scene.add(ikea);
+    var geometry = new THREE.PlaneGeometry(18, 10);
+    var ikea = new THREE.Mesh(geometry, material);
+    ikea.position.set(8.8,28,-143.5)
+    ikea.userData = {URL: "http://www.ikea.se"};
+    signs.push(ikea);
+    scene.add(ikea);
 
         //Ikea side
      var loader = new THREE.TextureLoader();
@@ -199,7 +197,7 @@ var signs= [];
        signs.push(hm);
        scene.add(hm);
 
-        //H&M side
+      //H&M side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
        map: loader.load('images/hm.jpg')
@@ -212,6 +210,60 @@ var signs= [];
        hm.userData = {URL: "https://www2.hm.com/sv_se/rea.html"};
        signs.push(hm);
        scene.add(hm);
+
+      //Burger King
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/burger-king.png')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var bk = new THREE.Mesh(geometry, material);
+       bk.position.set(-95.8,17.2,-43)
+       bk.userData = {URL: "https://www.burgerking.se/"};
+       signs.push(bk);
+       scene.add(bk);
+
+     //Burger King side
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/burger-king.png')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var bk = new THREE.Mesh(geometry, material);
+       bk.position.set(-84.2,17.2,-54)
+       bk.rotation.y= Math.PI/2;
+       bk.userData = {URL: "https://www.burgerking.se/"};
+       signs.push(bk);
+       scene.add(bk);
+    
+    //McDonalds
+    var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/mcdonalds.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var mc = new THREE.Mesh(geometry, material);
+       mc.position.set(-95.8,17.2,-233)
+       mc.userData = {URL: "https://www.mcdonalds.com/se/sv-se/hela-menyn/kampanj.html"};
+       signs.push(mc);
+       scene.add(mc);
+
+     //McDonalds side
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/mcdonalds.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var mc = new THREE.Mesh(geometry, material);
+       mc.position.set(-84.2,17.2,-244.4)
+       mc.rotation.y= Math.PI/2;
+       mc.userData = {URL: "https://www.mcdonalds.com/se/sv-se/hela-menyn/kampanj.html"};
+       signs.push(mc);
+       scene.add(mc);
   }
   console.log(signs.length + " item in the Signs array");
   }
