@@ -57,8 +57,8 @@ function main() {
   document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
-  camera.position.set(30, walker.height+1, 80);
-  //camera.position.set(250,500,400);
+  //camera.position.set(30, walker.height+1, 80);
+  camera.position.set(30,walker.height+1,100);
 
   const controls = new OrbitControls(camera);
   //controls.addEventListener('change', renderer);
@@ -264,6 +264,87 @@ var signs= [];
        mc.userData = {URL: "https://www.mcdonalds.com/se/sv-se/hela-menyn/kampanj.html"};
        signs.push(mc);
        scene.add(mc);
+
+       //Naturkompaniet
+    var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/naturkompaniet.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var mc = new THREE.Mesh(geometry, material);
+       mc.position.set(-180.8,19,-143.5)
+       mc.userData = {URL: "https://www.naturkompaniet.se/"};
+       signs.push(mc);
+       scene.add(mc);
+
+     //Naturkompaniet side
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/naturkompaniet.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var mc = new THREE.Mesh(geometry, material);
+       mc.position.set(-168.2,19,-153.5)
+       mc.rotation.y= Math.PI/2;
+       mc.userData = {URL: "https://www.naturkompaniet.se/"};
+       signs.push(mc);
+       scene.add(mc);
+
+        //Åhléns
+    var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/ahlens.png')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var mc = new THREE.Mesh(geometry, material);
+       mc.position.set(-180.8,19,47)
+       mc.userData = {URL: "https://www.naturkompaniet.se/"};
+       signs.push(mc);
+       scene.add(mc);
+
+     //Åhlén side
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/ahlens.png')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var mc = new THREE.Mesh(geometry, material);
+       mc.position.set(-168.2,19,35)
+       mc.rotation.y= Math.PI/2;
+       mc.userData = {URL: "https://www.naturkompaniet.se/"};
+       signs.push(mc);
+       scene.add(mc);
+
+        //Clas Ohlson
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/clas-ohlson.png')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var hm = new THREE.Mesh(geometry, material);
+       hm.position.set(80,17,-80.5)
+       hm.userData = {URL: "https://www.clasohlson.com/se/"};
+       signs.push(hm);
+       scene.add(hm);
+
+      //Clas Ohlson side
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/clas-ohlson.png')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var hm = new THREE.Mesh(geometry, material);
+       hm.position.set(140,17,10.5)
+       hm.rotation.y = -Math.PI/2;
+       hm.userData = {URL: "https://www.clasohlson.com/se/"};
+       signs.push(hm);
+       scene.add(hm);
   }
   console.log(signs.length + " item in the Signs array");
   }
@@ -289,11 +370,26 @@ var signs= [];
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
-
+    var a_rotation = camera.rotation.y;
     //walking events
-   if (keyboard[87]) { // W key go forward
-		camera.position.x += Math.sin(camera.rotation.y) * walker.speed;
-		camera.position.z += -Math.cos(camera.rotation.y) * walker.speed;
+  
+	if (keyboard[65]) { // A key go left
+    a_rotation = camera.rotation.y += Math.PI/50;
+    //camera.position.x -= Math.sin(camera.rotation.y + Math.PI / 2);
+		//camera.position.z -= -Math.cos(camera.rotation.y + Math.PI / 2);
+    console.log("A (left) clicked");
+	}
+	if (keyboard[68]) { // D key  go right
+    a_rotation = camera.rotation.y -= Math.PI/50;
+    //camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2);
+		//camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2);
+    console.log("D (right) clicked");
+	}
+  if (keyboard[87]) { // W key go forward
+  camera.position.set(+walker.speed, a_rotation,0);
+  /* 
+		camera.position.x += Math.sin(a_rotation) * walker.speed;
+		camera.position.z += -Math.cos(a_rotation) * walker.speed;  */
     console.log("W clicked");
 	}
 	if (keyboard[83]) { // S key go back
@@ -301,31 +397,22 @@ var signs= [];
 		camera.position.z -= -Math.cos(camera.rotation.y) * walker.speed;
     console.log("S clicked");
 	}
-	if (keyboard[68]) { // A key go left
-		camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * walker.speed;
-		camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * walker.speed;
-    console.log("D clicked");
-	}
-	if (keyboard[65]) { // D key  go right
-		camera.position.x += Math.sin(camera.rotation.y - Math.PI / 2) * walker.speed;
-		camera.position.z += -Math.cos(camera.rotation.y - Math.PI / 2) * walker.speed;
-    console.log("A clicked");
-	}
-
-    //Turning the Cam events   
-	if(keyboard[76]){ // L key
-        camera.rotation.y += walker.turn;
+/* 
+    //Turning the Cam events, arrow keys  
+	if(keyboard[37]){ // L key
+        camera.rotation.y += Math.PI/100;
         camera.position.x -= Math.sin(camera.rotation.y + Math.PI / 2) * walker.speed;
 		camera.position.z -= -Math.cos(camera.rotation.y + Math.PI / 2) * walker.speed;
-    console.log("L clicked");
+    console.log("L arrow clicked");
 	}
-  if(keyboard[82]){ // R key
-      camera.rotation.y -= walker.turn;
+  if(keyboard[39]){ // R key
+      camera.rotation.y -= Math.PI/100;
       camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * walker.speed;
 		camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * walker.speed;
-    console.log("R clicked");
+    console.log("R arrow clicked");
 	} 
-  /*  if(keyboard[38]){ // top arrow key
+  
+   if(keyboard[38]){ // top arrow key
 		camera.position.y += walker.turn * 2;
     console.log("Tilt Up clicked");
 	}
