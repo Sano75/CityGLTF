@@ -57,8 +57,8 @@ function main() {
   document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
-  //camera.position.set(30, walker.height+1, 80);
-  camera.position.set(30,walker.height+1,100);
+  camera.position.set(30, walker.height+1, 80);
+  //camera.position.set(0,300,0);
 
   const controls = new OrbitControls(camera);
   //controls.addEventListener('change', renderer);
@@ -327,7 +327,7 @@ var signs= [];
        
        var geometry = new THREE.PlaneGeometry(18, 10);
        var hm = new THREE.Mesh(geometry, material);
-       hm.position.set(80,17,-80.5)
+       hm.position.set(92,18,-42.5)
        hm.userData = {URL: "https://www.clasohlson.com/se/"};
        signs.push(hm);
        scene.add(hm);
@@ -340,7 +340,7 @@ var signs= [];
        
        var geometry = new THREE.PlaneGeometry(18, 10);
        var hm = new THREE.Mesh(geometry, material);
-       hm.position.set(140,17,10.5)
+       hm.position.set(81.5,18,-52.5)
        hm.rotation.y = -Math.PI/2;
        hm.userData = {URL: "https://www.clasohlson.com/se/"};
        signs.push(hm);
