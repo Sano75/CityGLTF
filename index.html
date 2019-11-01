@@ -69,7 +69,7 @@ function main() {
  
 
   scene = new THREE.Scene();
-  //scene.background = new THREE.Color('grey');
+  scene.background = new THREE.Color('grey');
 
   let materialArray = [];
   let texture_ft = new THREE.TextureLoader().load('/images/skybox/divine_ft.jpg');
@@ -421,6 +421,7 @@ var signs= [];
 	} 
  */
     renderer.render(scene, camera);
+    //renderer.domElement.addEventListener('dblclick', ondblclick, false);
     requestAnimationFrame(render);
   }
 
@@ -452,11 +453,25 @@ function clicked(event){
       //alert(intersects[0].object.userData.URL);
     }
 }
+
+function ondblclick(event){
+  mouse.x = event.clientX / window.innerWidth * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  dir.upproject(camera);
+
+  ray = new THREE.Raycaster(camera.position, dir.sub(camera.position).normalize())
+  var intersects = ray.intersectObjects(city);
+  if(intersects.length > 0){ alert("test"); }
+}
+
 function animate() {
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
 }
 
+window.addEventListener('dblclick', ondblclick);
 window.addEventListener('click', clicked );
 window.addEventListener('keydown', keyDown);
 window.addEventListener('keyup', keyUp);
