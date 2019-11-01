@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/index.css">
     <script src="/OrbitControls.js"></script>
     <script src="/three.min.js"></script>
+    <script src="/js/index.js"></script>
     <title>Three.js - City -  GLTF</title>
    
   </head>
@@ -51,7 +52,7 @@ window.addEventListener('resize', function () {
 
 
 function main() {
-  const canvas = document.querySelector('#c');
+  //const canvas = document.querySelector('#c');
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -72,12 +73,12 @@ function main() {
   //scene.background = new THREE.Color('grey');
 
   let materialArray = [];
-  let texture_ft = new THREE.TextureLoader().load('/images/divine_ft.jpg');
-  let texture_bk = new THREE.TextureLoader().load('/images/divine_bk.jpg');
-  let texture_up = new THREE.TextureLoader().load('/images/divine_up.jpg');
-  let texture_dn = new THREE.TextureLoader().load('/images/divine_dn.jpg');
-  let texture_rt = new THREE.TextureLoader().load('/images/divine_rt.jpg');
-  let texture_lf = new THREE.TextureLoader().load('/images/divine_lf.jpg');
+  let texture_ft = new THREE.TextureLoader().load('/images/skybox/divine_ft.jpg');
+  let texture_bk = new THREE.TextureLoader().load('/images/skybox/divine_bk.jpg');
+  let texture_up = new THREE.TextureLoader().load('/images/skybox/divine_up.jpg');
+  let texture_dn = new THREE.TextureLoader().load('/images/skybox/divine_dn.jpg');
+  let texture_rt = new THREE.TextureLoader().load('/images/skybox/divine_rt.jpg');
+  let texture_lf = new THREE.TextureLoader().load('/images/skybox/divine_lf.jpg');
   
   materialArray.push(new THREE.MeshBasicMaterial({map: texture_ft}));
   materialArray.push(new THREE.MeshBasicMaterial({map: texture_bk}));
@@ -116,7 +117,6 @@ function main() {
 
   const models = {
     city:    { url: 'images/city/scene.gltf' },
-    building:    { url: 'images/building_25/scene.gltf' },
   };
   {
     const gltfLoader = new GLTFLoader(manager);
@@ -160,7 +160,7 @@ var signs= [];
     //Ikea
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/ikea.jpeg')
+       map: loader.load('images/signs/ikea.jpeg')
        });
        
     var geometry = new THREE.PlaneGeometry(18, 10);
@@ -173,7 +173,7 @@ var signs= [];
         //Ikea side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/ikea.jpeg')
+       map: loader.load('images/signs/ikea.jpeg')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -187,7 +187,7 @@ var signs= [];
         //H&M
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/hm.jpg')
+       map: loader.load('images/signs/hm.jpg')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -200,7 +200,7 @@ var signs= [];
       //H&M side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/hm.jpg')
+       map: loader.load('images/signs/hm.jpg')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -214,7 +214,7 @@ var signs= [];
       //Burger King
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/burgerking2.png')
+       map: loader.load('images/signs/burgerking2.png')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -227,7 +227,7 @@ var signs= [];
      //Burger King side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/burgerking2.png')
+       map: loader.load('images/signs/burgerking2.png')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -241,7 +241,7 @@ var signs= [];
     //McDonalds
     var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/mcdonalds.jpg')
+       map: loader.load('images/signs/mcdonalds.jpg')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -254,7 +254,7 @@ var signs= [];
      //McDonalds side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/mcdonalds.jpg')
+       map: loader.load('images/signs/mcdonalds.jpg')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -268,7 +268,7 @@ var signs= [];
        //Naturkompaniet
     var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/naturkompaniet.jpg')
+       map: loader.load('images/signs/naturkompaniet.jpg')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -281,7 +281,7 @@ var signs= [];
      //Naturkompaniet side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/naturkompaniet.jpg')
+       map: loader.load('images/signs/naturkompaniet.jpg')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -295,7 +295,7 @@ var signs= [];
         //Åhléns
     var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/ahlens.png')
+       map: loader.load('images/signs/ahlens.png')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -308,7 +308,7 @@ var signs= [];
      //Åhlén side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/ahlens.png')
+       map: loader.load('images/signs/ahlens.png')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -335,7 +335,7 @@ var signs= [];
       //Clas Ohlson side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/clas-ohlson.png')
+       map: loader.load('images/signs/clas-ohlson.png')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
