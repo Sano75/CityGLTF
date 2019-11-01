@@ -181,8 +181,8 @@ var signs= [];
        ikea.position.set(21.5,28,-153.5)
        ikea.rotation.y = Math.PI/2;
        ikea.userData = {URL: "http://www.ikea.se"};
-       signs.push(ikea);
-       scene.add(ikea);
+      // signs.push(ikea);
+       //scene.add(ikea);
 
         //H&M
      var loader = new THREE.TextureLoader();
@@ -208,13 +208,13 @@ var signs= [];
        hm.position.set(21.5,17,-153.5)
        hm.rotation.y= Math.PI/2;
        hm.userData = {URL: "https://www2.hm.com/sv_se/rea.html"};
-       signs.push(hm);
-       scene.add(hm);
+       //signs.push(hm);
+       //scene.add(hm);
 
       //Burger King
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/burger-king.png')
+       map: loader.load('images/burgerking2.png')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -227,7 +227,7 @@ var signs= [];
      //Burger King side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/burger-king.png')
+       map: loader.load('images/burgerking2.png')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
@@ -235,8 +235,8 @@ var signs= [];
        bk.position.set(-84.2,17.2,-54)
        bk.rotation.y= Math.PI/2;
        bk.userData = {URL: "https://www.burgerking.se/"};
-       signs.push(bk);
-       scene.add(bk);
+       //signs.push(bk);
+       //scene.add(bk);
     
     //McDonalds
     var loader = new THREE.TextureLoader();
@@ -248,8 +248,8 @@ var signs= [];
        var mc = new THREE.Mesh(geometry, material);
        mc.position.set(-95.8,17.2,-233)
        mc.userData = {URL: "https://www.mcdonalds.com/se/sv-se/hela-menyn/kampanj.html"};
-       signs.push(mc);
-       scene.add(mc);
+       //signs.push(mc);
+       //scene.add(mc);
 
      //McDonalds side
      var loader = new THREE.TextureLoader();
@@ -275,8 +275,8 @@ var signs= [];
        var mc = new THREE.Mesh(geometry, material);
        mc.position.set(-180.8,19,-143.5)
        mc.userData = {URL: "https://www.naturkompaniet.se/"};
-       signs.push(mc);
-       scene.add(mc);
+       //signs.push(mc);
+       //scene.add(mc);
 
      //Naturkompaniet side
      var loader = new THREE.TextureLoader();
@@ -316,8 +316,8 @@ var signs= [];
        mc.position.set(-168.2,19,35)
        mc.rotation.y= Math.PI/2;
        mc.userData = {URL: "https://www.naturkompaniet.se/"};
-       signs.push(mc);
-       scene.add(mc);
+      // signs.push(mc);
+      // scene.add(mc);
 
         //Clas Ohlson
      var loader = new THREE.TextureLoader();
@@ -329,8 +329,8 @@ var signs= [];
        var hm = new THREE.Mesh(geometry, material);
        hm.position.set(92,18,-42.5)
        hm.userData = {URL: "https://www.clasohlson.com/se/"};
-       signs.push(hm);
-       scene.add(hm);
+      // signs.push(hm);
+       //scene.add(hm);
 
       //Clas Ohlson side
      var loader = new THREE.TextureLoader();
