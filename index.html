@@ -52,7 +52,6 @@ window.addEventListener('resize', function () {
 
 
 function main() {
-  //const canvas = document.querySelector('#c');
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -92,7 +91,7 @@ function main() {
         let skyboxGeo = new THREE.BoxGeometry( 10000, 10000, 10000);
         let skybox = new THREE.Mesh( skyboxGeo, materialArray );
         scene.add( skybox );  
-        animate();
+        //animate();
 
   function addLight(...pos) {
     const color = 0xFFFFFF;
@@ -322,7 +321,7 @@ var signs= [];
         //Clas Ohlson
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
-       map: loader.load('images/clas-ohlson.png')
+       map: loader.load('images/signs/clas-ohlson.png')
        });
        
        var geometry = new THREE.PlaneGeometry(18, 10);
