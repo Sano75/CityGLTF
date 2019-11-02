@@ -299,7 +299,7 @@ var signs= [];
        var geometry = new THREE.PlaneGeometry(18, 10);
        var mc = new THREE.Mesh(geometry, material);
        mc.position.set(-180.8,19,47)
-       mc.userData = {URL: "https://www.naturkompaniet.se/"};
+       mc.userData = {URL: "https://www.ahlens.se/"};
        signs.push(mc);
        scene.add(mc);
 
@@ -313,7 +313,7 @@ var signs= [];
        var mc = new THREE.Mesh(geometry, material);
        mc.position.set(-168.2,19,35)
        mc.rotation.y= Math.PI/2;
-       mc.userData = {URL: "https://www.naturkompaniet.se/"};
+       mc.userData = {URL: "https://www.ahlens.se/"};
        signs.push(mc);
        scene.add(mc);
 
@@ -370,7 +370,7 @@ var signs= [];
     }
     var a_rotation = camera.rotation.y;
     //walking events
-  
+  /*
 	if (keyboard[65]) { // A key go left
     a_rotation = camera.rotation.y += Math.PI/50;
     //camera.position.x -= Math.sin(camera.rotation.y + Math.PI / 2);
@@ -394,6 +394,7 @@ var signs= [];
 		camera.position.x -= Math.sin(camera.rotation.y) * walker.speed;
 		camera.position.z -= -Math.cos(camera.rotation.y) * walker.speed;
     console.log("S clicked");
+		*/
 	}
 /* 
     //Turning the Cam events, arrow keys  
