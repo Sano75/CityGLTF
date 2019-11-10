@@ -159,15 +159,15 @@ function main() {
   });
   var scen6 = gltfLoader.load(models["ship"].url, (gltf) => {
     var root = gltf.scene;
-    root.position.set(-300,0,-200);
-    root.scale.set(0.01, 0.01, 0.01);
+    root.position.set(-300,-7,-200);
+    root.scale.set(0.05, 0.05, 0.05);
     scene.add(root);
     root = ship;
 
   });
   var scen6 = gltfLoader.load(models["sjoboden"].url, (gltf) => {
     var root = gltf.scene;
-    root.position.set(-250,0,-220);
+    root.position.set(-250,-5,-220);
     root.scale.set(0.01, 0.01, 0.01);
     scene.add(root);
 
