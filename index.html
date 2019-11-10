@@ -40,7 +40,7 @@ var camDef = {
   far: 10000
 };
 
-var scene, camera, renderer;
+var scene, camera, renderer, flag, ship;
 
 window.addEventListener('resize', function () {
 	var width = window.innerWidth;
@@ -51,13 +51,15 @@ window.addEventListener('resize', function () {
 
 
 function main() {
+  flag = 1;
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
-  camera.position.set(30, walker.height+1, 80);
-  //camera.position.set(0,300,0);
+  //camera.position.set(30, walker.height+1, 80);
+  //camera.position.set(-220, walker.height+1, 10);
+  camera.position.set(0,500,-50);
 
   const controls = new OrbitControls(camera);
   //controls.addEventListener('change', renderer);
@@ -114,7 +116,11 @@ function main() {
   };
 
   const models = {
-    city:    { url: 'images/city/scene.gltf' },
+    city: { url: 'images/city/scene.gltf' },
+    ship: { url: 'images/ship/scene.gltf' },
+    sea_wave: { url: 'images/sea_wave/scene.gltf' },    
+    sjoboden: { url: 'images/sjoboden/scene.gltf' },
+
   };
   {
     const gltfLoader = new GLTFLoader(manager);
@@ -141,6 +147,28 @@ function main() {
     var root = gltf.scene;
     root.position.set(-95.5,3.8,-160);
     root.scale.set(0.1, 0.1, 0.1);
+    scene.add(root);
+
+  });
+  var scen5 = gltfLoader.load(models["sea_wave"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(-320,-10,-128);
+    root.scale.set(1, 1, 2);
+    scene.add(root);
+
+  });
+  var scen6 = gltfLoader.load(models["ship"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(-300,0,-200);
+    root.scale.set(0.01, 0.01, 0.01);
+    scene.add(root);
+    root = ship;
+
+  });
+  var scen6 = gltfLoader.load(models["sjoboden"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(-250,0,-220);
+    root.scale.set(0.01, 0.01, 0.01);
     scene.add(root);
 
   });
@@ -389,21 +417,6 @@ var signs= [];
     console.log("S clicked");
 		
 	}
-/* 
-    //Turning the Cam events, arrow keys  
-	if(keyboard[37]){ // L key
-        camera.rotation.y += Math.PI/100;
-        camera.position.x -= Math.sin(camera.rotation.y + Math.PI / 2) * walker.speed;
-		camera.position.z -= -Math.cos(camera.rotation.y + Math.PI / 2) * walker.speed;
-    console.log("L arrow clicked");
-	}
-  if(keyboard[39]){ // R key
-      camera.rotation.y -= Math.PI/100;
-      camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * walker.speed;
-		camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * walker.speed;
-    console.log("R arrow clicked");
-	} 
- */
     renderer.render(scene, camera);
     //renderer.domElement.addEventListener('dblclick', ondblclick, false);
     requestAnimationFrame(render);
@@ -450,9 +463,24 @@ function ondblclick(event){
   if(intersects.length > 0){ alert("test"); }
 }
 
+
 function animate() {
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
+
+  
+  //Ship swing, scene 6
+    if (flag === 1) {
+		ship.rotation.z += 0.002;
+	} if (flag === 0) {
+		ship.rotation.z -= 0.002;
+  }
+	if (ship.rotation.z >= 0.12) {
+		flag = 0;
+	} if (ship.rotation.z <= -0.12) {
+		flag = 1;
+	} 
+  
 }
 
 window.addEventListener('dblclick', ondblclick);
