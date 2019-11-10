@@ -161,11 +161,11 @@ function main() {
     var root = gltf.scene;
     root.position.set(-315,-7,-200);
     root.scale.set(0.015, 0.015, 0.015);
+    //root.rotation.y -= Math.PI/2;
+
     scene.add(root);
-    root = ship;
   });
-   ship = scen6;
-   
+
   var scen7 = gltfLoader.load(models["sjoboden"].url, (gltf) => {
     var root = gltf.scene;
     root.position.set(-250,-5,-220);
@@ -468,7 +468,7 @@ function ondblclick(event){
 function animate() {
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
-
+/* 
   
   //Ship swing, scene 6
     if (flag === 1) {
@@ -480,7 +480,7 @@ function animate() {
 		flag = 0;
 	} if (ship.rotation.z <= -0.12) {
 		flag = 1;
-	} 
+	}  */
   
 }
 
