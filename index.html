@@ -57,9 +57,9 @@ function main() {
   document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
-  //camera.position.set(30, walker.height+1, 80);
+  camera.position.set(30, walker.height+1, 80);
   //camera.position.set(-220, walker.height+1, 10);
-  camera.position.set(0,500,-50);
+  //camera.position.set(0,500,-50);
 
   const controls = new OrbitControls(camera);
   //controls.addEventListener('change', renderer);
