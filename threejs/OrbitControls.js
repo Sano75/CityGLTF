@@ -565,6 +565,7 @@ var OrbitControls = function ( object, domElement ) {
 	function handleKeyDown( event ) {
 
 		var needsUpdate = false;
+		
 
 		switch ( event.keyCode ) {
 
@@ -578,6 +579,7 @@ var OrbitControls = function ( object, domElement ) {
 				needsUpdate = true;
 				break;
 
+				/*
 			case scope.keys.LEFT:
 				pan( scope.keyPanSpeed, 0 );
 				needsUpdate = true;
@@ -587,8 +589,10 @@ var OrbitControls = function ( object, domElement ) {
 				pan( - scope.keyPanSpeed, 0 );
 				needsUpdate = true;
 				break;
+				*/			
 
 		}
+		
 
 		if ( needsUpdate ) {
 
