@@ -120,6 +120,7 @@ function main() {
     ship: { url: 'images/ship/scene.gltf' },
     sea_wave: { url: 'images/sea_wave/scene.gltf' },    
     sjoboden: { url: 'images/sjoboden/scene.gltf' },
+    house: { url: 'images/house/scene.gltf' },
 
   };
   {
@@ -166,12 +167,12 @@ function main() {
     scene.add(root);
   });
 
-  var scen7 = gltfLoader.load(models["sjoboden"].url, (gltf) => {
+  var scen7 = gltfLoader.load(models["house"].url, (gltf) => {
     var root = gltf.scene;
-    root.position.set(-250,-5,-220);
-    root.scale.set(0.01, 0.01, 0.01);
-    //scene.add(root);
-
+    root.position.set(-250,10,-220);
+    root.rotation.z = Math.pi/2;
+    root.scale.set(0.5, 0.5, 0.5);
+    scene.add(root);
   });
 }
 
