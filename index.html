@@ -72,6 +72,13 @@ function main() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color('grey');
 
+  var geometry = new THREE.PlaneGeometry(110,50,30);
+  var material = new THREE.MeshBasicMaterial({color: 0x391D16, side: THREE.DoubleSide});
+  var floorMesh = new THREE.Mesh(geometry, material);
+  floorMesh.position.set(-299.5, -5, -227);
+  floorMesh.rotation.x = Math.PI/2;
+  scene.add(floorMesh);
+
   let materialArray = [];
   let texture_ft = new THREE.TextureLoader().load('divine_ft.jpg');
   let texture_bk = new THREE.TextureLoader().load('divine_bk.jpg');
@@ -169,7 +176,14 @@ function main() {
 
   var scen7 = gltfLoader.load(models["house"].url, (gltf) => {
     var root = gltf.scene;
-    root.position.set(-265,-5,-220);
+    root.position.set(-265,-5,-225);
+    root.rotation.y -= Math.PI*3.3;
+    root.scale.set(0.5, 0.5, 0.5);
+    scene.add(root);
+  });
+  var scen8 = gltfLoader.load(models["house"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(-300,-5,-225);
     root.rotation.y -= Math.PI*3.3;
     root.scale.set(0.5, 0.5, 0.5);
     scene.add(root);
