@@ -57,6 +57,7 @@ function main() {
   document.body.appendChild(renderer.domElement);
 
   camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
+  //Gatuplan
   camera.position.set(30, walker.height+1, 80);
   //camera.position.set(-220, walker.height+1, 10);
   //camera.position.set(0,500,-50);
@@ -132,7 +133,7 @@ function main() {
   };
   {
     const gltfLoader = new GLTFLoader(manager);
-    var scen1 = gltfLoader.load(models["city"].url, (gltf) => {
+  var scen1 = gltfLoader.load(models["city"].url, (gltf) => {
     var root = gltf.scene;
     root.position.set(93,3.8,30);
     root.scale.set(0.1, 0.1, 0.1);
@@ -173,7 +174,6 @@ function main() {
 
     scene.add(root);
   });
-
   var scen7 = gltfLoader.load(models["house"].url, (gltf) => {
     var root = gltf.scene;
     root.position.set(-265,-5,-225);
@@ -387,7 +387,62 @@ var signs= [];
        hm.userData = {URL: "https://www.clasohlson.com/se/"};
        signs.push(hm);
        scene.add(hm);
+
+       //Webhallen
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/signs/webhallen.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var hm = new THREE.Mesh(geometry, material);
+       hm.position.set(86,5,-138)
+       hm.userData = {URL: "https://www.webhallen.com/"};
+       signs.push(hm);
+       scene.add(hm);
+
+      //Webhallen side
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/signs/webhallen.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var hm = new THREE.Mesh(geometry, material);
+       hm.position.set(75.5,5,-151)
+       hm.rotation.y = -Math.PI/2;
+       hm.userData = {URL: "https://www.webhallen.com/"};
+       signs.push(hm);
+       scene.add(hm);
+
+       //Espresso House
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/signs/espressohouse.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var hm = new THREE.Mesh(geometry, material);
+       hm.position.set(90,5,-42.5)
+       hm.userData = {URL: "https://espressohouse.com/"};
+       signs.push(hm);
+       scene.add(hm);
+
+      //Espresso House side
+     var loader = new THREE.TextureLoader();
+     var material = new THREE.MeshLambertMaterial({
+       map: loader.load('images/signs/espressohouse.jpg')
+       });
+       
+       var geometry = new THREE.PlaneGeometry(18, 10);
+       var hm = new THREE.Mesh(geometry, material);
+       hm.position.set(81.5,5,-52.5)
+       hm.rotation.y = -Math.PI/2;
+       hm.userData = {URL: "https://espressohouse.com/"};
+       signs.push(hm);
+       scene.add(hm);
   }
+  
   console.log(signs.length + " item in the Signs array");
   }
   function resizeRendererToDisplaySize(renderer) {
