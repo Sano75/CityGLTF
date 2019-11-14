@@ -40,7 +40,7 @@ var camDef = {
   far: 10000
 };
 
-var scene, camera, renderer, flag, ship;
+var scene, camera, renderer, flag, ship, ebs_box, crate;
 
 window.addEventListener('resize', function () {
 	var width = window.innerWidth;
@@ -55,6 +55,9 @@ function main() {
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
+  
+  const manager = new THREE.LoadingManager();
+  manager.onLoad = init;
 
   camera = new THREE.PerspectiveCamera(camDef.fov, camDef.aspect, camDef.near, camDef.far);
   //Gatuplan
@@ -79,6 +82,35 @@ function main() {
   floorMesh.position.set(-299.5, -5, -227);
   floorMesh.rotation.x = Math.PI/2;
   scene.add(floorMesh);
+  
+  var geometry = new THREE.CylinderGeometry( 5, 5, 20, 32 );
+  var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+  var pelare = new THREE.Mesh( geometry, material );
+  pelare.position.set(-345, 5, -225);
+  scene.add( pelare );
+
+  var ebs_signLoader = new THREE.TextureLoader(manager);
+  var crateTexture = ebs_signLoader.load("images/signs/ebs-logo.png");
+  var  crateBumpMap = ebs_signLoader.load("images/signs/ebs-logo.png");
+  var  crateNormalMap = ebs_signLoader.load("images/signs/ebs-logo.png")
+
+    crate = new THREE.Mesh(
+        new THREE.CylinderGeometry( 5, 5, 15, 35 ),
+        new THREE.MeshPhongMaterial( {
+            color: 0xffffff,
+            map:crateTexture,
+            bumpMap: crateBumpMap,
+            normalMap:crateNormalMap
+        })
+    );
+    
+    crate.position.set(-345, 22, -225);
+    crate.receiveShadow = true;
+    scene.add(crate);
+
+  
+
+
 
   let materialArray = [];
   let texture_ft = new THREE.TextureLoader().load('divine_ft.jpg');
@@ -95,12 +127,14 @@ function main() {
   materialArray.push(new THREE.MeshBasicMaterial({map: texture_rt}));
   materialArray.push(new THREE.MeshBasicMaterial({map: texture_lf}));
    
-            for (let i = 0; i < 6; i++)
-           materialArray[i].side = THREE.BackSide;
-        let skyboxGeo = new THREE.BoxGeometry( 10000, 10000, 10000);
-        let skybox = new THREE.Mesh( skyboxGeo, materialArray );
-        scene.add( skybox );  
-        //animate();
+   for (let i = 0; i < 6; i++)
+   materialArray[i].side = THREE.BackSide;
+   let skyboxGeo = new THREE.BoxGeometry( 10000, 10000, 10000);
+   let skybox = new THREE.Mesh( skyboxGeo, materialArray );
+   scene.add( skybox );
+   
+   
+   animate();
 
   function addLight(...pos) {
     const color = 0xFFFFFF;
@@ -114,9 +148,9 @@ function main() {
   addLight(5, -5, 2);
   addLight(-5, 5, 5);
   addLight(0,0,0);
-
+/* 
   const manager = new THREE.LoadingManager();
-  manager.onLoad = init;
+  manager.onLoad = init; */
 
   const progressbarElem = document.querySelector('#progressbar');
   manager.onProgress = (url, itemsLoaded, itemsTotal) => {
@@ -546,6 +580,7 @@ function ondblclick(event){
 function animate() {
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
+  crate.rotation.y -=0.05;
 /* 
   
   //Ship swing, scene 6
