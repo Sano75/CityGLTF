@@ -110,10 +110,6 @@ function main() {
     crate.receiveShadow = true;
     scene.add(crate);
 
-  
-
-
-
   let materialArray = [];
   let texture_ft = new THREE.TextureLoader().load('divine_ft.jpg');
   let texture_bk = new THREE.TextureLoader().load('divine_bk.jpg');
@@ -583,7 +579,7 @@ function animate() {
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
   crate.rotation.y -=0.05;
-  
+  /* 
   //Ship swing, scene 6
     if (flag === 1) {
 		ship.rotation.z += 0.002;
@@ -594,7 +590,7 @@ function animate() {
 		flag = 0;
 	} if (ship.rotation.z <= -0.12) {
 		flag = 1;
-	}
+	} */
   
 }
 
