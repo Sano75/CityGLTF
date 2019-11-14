@@ -104,8 +104,11 @@ function main() {
         })
     );
     
+    crate.userData = {URL: "https://www.essingebatsallskap.se/"};
+    //https://www.essingebatsallskap.se/
     crate.position.set(-345, 22, -225);
     crate.receiveShadow = true;
+    signs.push(crate);
     scene.add(crate);
 
   
@@ -581,7 +584,6 @@ function animate() {
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
   crate.rotation.y -=0.05;
-/* 
   
   //Ship swing, scene 6
     if (flag === 1) {
@@ -593,7 +595,7 @@ function animate() {
 		flag = 0;
 	} if (ship.rotation.z <= -0.12) {
 		flag = 1;
-	}  */
+	}
   
 }
 
