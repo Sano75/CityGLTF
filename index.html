@@ -111,7 +111,7 @@ function main() {
   var  crateNormalMap = sanoLinkedin.load("images/signs/sanoLinkedin.jpg")
 
     sanoCrate = new THREE.Mesh(
-        new THREE.CylinderGeometry( 5, 5, 15, 35 ),
+        new THREE.CylinderGeometry( 5, 5, 12, 35 ),
         new THREE.MeshPhongMaterial( {
             color: 0xffffff,
             map:crateTexture,
@@ -127,7 +127,7 @@ function main() {
 
     sanoCrate.userData = {URL: "https://www.linkedin.com/in/sanogharzani/"};
     //https://www.essingebatsallskap.se/
-    sanoCrate.position.set(90,70,-42.5);
+    sanoCrate.position.set(93,72,-43);
     sanoCrate.receiveShadow = true;
 
     scene.add(crate);
