@@ -41,6 +41,7 @@ var camDef = {
 };
 
 var scene, camera, renderer, flag, ship, ebs_box, crate;
+var scenInd= [];
 
 window.addEventListener('resize', function () {
 	var width = window.innerWidth;
@@ -103,12 +104,34 @@ function main() {
             normalMap:crateNormalMap
         })
     );
+
+  var sanoLinkedin = new THREE.TextureLoader(manager);
+  var crateTexture = sanoLinkedin.load("images/signs/sanoLinkedin.jpg");
+  var  crateBumpMap = sanoLinkedin.load("images/signs/sanoLinkedin.jpg");
+  var  crateNormalMap = sanoLinkedin.load("images/signs/sanoLinkedin.jpg")
+
+    sanoCrate = new THREE.Mesh(
+        new THREE.CylinderGeometry( 5, 5, 15, 35 ),
+        new THREE.MeshPhongMaterial( {
+            color: 0xffffff,
+            map:crateTexture,
+            bumpMap: crateBumpMap,
+            normalMap:crateNormalMap
+        })
+    );
     
     crate.userData = {URL: "https://www.essingebatsallskap.se/"};
     //https://www.essingebatsallskap.se/
     crate.position.set(-345, 22, -225);
     crate.receiveShadow = true;
+
+    sanoCrate.userData = {URL: "https://www.linkedin.com/in/sanogharzani/"};
+    //https://www.essingebatsallskap.se/
+    sanoCrate.position.set(0,0,0);
+    sanoCrate.receiveShadow = true;
+
     scene.add(crate);
+    scene.add(sanoCrate);
 
   let materialArray = [];
   let texture_ft = new THREE.TextureLoader().load('divine_ft.jpg');
@@ -163,6 +186,7 @@ function main() {
     house: { url: 'images/house/scene.gltf' },
 
   };
+  /* var scenInd= []; */
   {
     const gltfLoader = new GLTFLoader(manager);
   var scen1 = gltfLoader.load(models["city"].url, (gltf) => {
@@ -227,6 +251,15 @@ function main() {
     root.rotation.y -= Math.PI*3.3;
     root.scale.set(0.5, 0.5, 0.5);
     scene.add(root);
+  });
+  
+
+  //scenInd.push('scen1');
+  scenInd.push('scen6b');
+  console.log(scenInd.length + " Items in the ScenInd");
+  //console.log(scenInd[0]);
+  scenInd.forEach((x) => {
+    console.log(x);
   });
 }
 
@@ -579,6 +612,8 @@ function animate() {
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
   crate.rotation.y -=0.05;
+
+ 
   /* 
   //Ship swing, scene 6
     if (flag === 1) {
