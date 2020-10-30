@@ -64,6 +64,8 @@ function main() {
   camera.position.set(30, walker.height+1, 80);
   //camera.position.set(-220, walker.height+1, 10);
   //camera.position.set(0,500,-50);
+  camera.fov = 45;
+      camera.updateProjectionMatrix();
 
   const controls = new OrbitControls(camera);
   //controls.addEventListener('change', renderer);
@@ -157,6 +159,7 @@ function main() {
 
   const models = {
     city: { url: 'images/city/scene.gltf' },
+    city2: { url: 'images/city2/littlest_tokyo/scene.gltf' },
     ship: { url: 'images/ship/scene.gltf' },
     sea_wave: { url: 'images/sea_wave/scene.gltf' },    
     sjoboden: { url: 'images/sjoboden/scene.gltf' },
@@ -191,6 +194,25 @@ function main() {
     scene.add(root);
 
   });
+
+
+
+
+  var scen14 = gltfLoader.load(models["city2"].url, (gltf) => {
+    var root = gltf.scene;
+    root.position.set(-97,50,200);
+    root.scale.set(0.35, 0.35, 0.35);
+    scene.add(root);
+
+  });
+
+
+
+
+
+
+
+
   var scen5 = gltfLoader.load(models["sea_wave"].url, (gltf) => {
     var root = gltf.scene;
     root.position.set(-322,-10,-128);
@@ -441,6 +463,9 @@ var signs= [];
        signs.push(hm);
        scene.add(hm);
 
+       //camera.fov = 20;
+      //camera.updateProjectionMatrix();
+
       //Webhallen side
      var loader = new THREE.TextureLoader();
      var material = new THREE.MeshLambertMaterial({
@@ -505,7 +530,7 @@ var signs= [];
     if (resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
+
     }
     var a_rotation = camera.rotation.y;
     //walking events
