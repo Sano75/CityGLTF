@@ -40,7 +40,8 @@ var camDef = {
   far: 10000
 };
 
-var scene, camera, renderer, flag, ship, ebs_box, crate;
+var scene, camera, renderer, flag, ship, ebs_box, crate, sanoCrate;
+var scenInd= [];
 
 window.addEventListener('resize', function () {
 	var width = window.innerWidth;
@@ -105,12 +106,34 @@ function main() {
             normalMap:crateNormalMap
         })
     );
+
+  var sanoLinkedin = new THREE.TextureLoader(manager);
+  var crateTexture = sanoLinkedin.load("images/signs/sanoLinkedin.jpg");
+  var  crateBumpMap = sanoLinkedin.load("images/signs/sanoLinkedin.jpg");
+  var  crateNormalMap = sanoLinkedin.load("images/signs/sanoLinkedin.jpg")
+
+    sanoCrate = new THREE.Mesh(
+        new THREE.CylinderGeometry( 5, 5, 12, 35 ),
+        new THREE.MeshPhongMaterial( {
+            color: 0xffffff,
+            map:crateTexture,
+            bumpMap: crateBumpMap,
+            normalMap:crateNormalMap
+        })
+    );
     
     crate.userData = {URL: "https://www.essingebatsallskap.se/"};
     //https://www.essingebatsallskap.se/
     crate.position.set(-345, 22, -225);
     crate.receiveShadow = true;
+
+    sanoCrate.userData = {URL: "https://www.linkedin.com/in/sanogharzani/"};
+    //https://www.essingebatsallskap.se/
+    sanoCrate.position.set(93,42,-48);
+    sanoCrate.receiveShadow = true;
+
     scene.add(crate);
+    scene.add(sanoCrate);
 
   let materialArray = [];
   let texture_ft = new THREE.TextureLoader().load('divine_ft.jpg');
@@ -166,6 +189,7 @@ function main() {
     house: { url: 'images/house/scene.gltf' },
 
   };
+  /* var scenInd= []; */
   {
     const gltfLoader = new GLTFLoader(manager);
   var scen1 = gltfLoader.load(models["city"].url, (gltf) => {
@@ -249,6 +273,15 @@ function main() {
     root.rotation.y -= Math.PI*3.3;
     root.scale.set(0.5, 0.5, 0.5);
     scene.add(root);
+  });
+  
+
+  //scenInd.push('scen1');
+  scenInd.push('scen6b');
+  console.log(scenInd.length + " Items in the ScenInd");
+  //console.log(scenInd[0]);
+  scenInd.forEach((x) => {
+    console.log(x);
   });
 }
 
@@ -536,20 +569,20 @@ var signs= [];
     //walking events
   
 	if (keyboard[37]) { // Left Arrow go left
-    a_rotation = camera.rotation.y += Math.PI/50;
+    //a_rotation = camera.rotation.y += Math.PI/50;
     console.log("A (left) clicked");
 	}
 	if (keyboard[39]) { // Right Arrow  go right
-    a_rotation = camera.rotation.y -= Math.PI/50;
+    //a_rotation = camera.rotation.y -= Math.PI/50;
     console.log("D (right) clicked");
 	}
   if (keyboard[87]) { // W key go forward
-  camera.position.set(+walker.speed, a_rotation,0);
+  //camera.position.set(+walker.speed, a_rotation,0);
     console.log("W clicked");
 	}
 	if (keyboard[83]) { // S key go back
-		camera.position.x -= Math.sin(camera.rotation.y) * walker.speed;
-		camera.position.z -= -Math.cos(camera.rotation.y) * walker.speed;
+		//camera.position.x -= Math.sin(camera.rotation.y) * walker.speed;
+		//camera.position.z -= -Math.cos(camera.rotation.y) * walker.speed;
     console.log("S clicked");
 		
 	}
@@ -604,6 +637,9 @@ function animate() {
   renderer.render(scene,camera);
   requestAnimationFrame(animate);
   crate.rotation.y -=0.05;
+  sanoCrate.rotation.y -= 0.05;
+
+ 
   /* 
   //Ship swing, scene 6
     if (flag === 1) {
